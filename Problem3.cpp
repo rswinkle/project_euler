@@ -30,7 +30,7 @@ using namespace std;
 
 int main()
 {
-	unsigned long double x = 600851475143;
+	unsigned long long x = 600851475143;
 
 	int factors[100] = {0};
 	int powers[100] = {0};

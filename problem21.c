@@ -5,6 +5,7 @@
 #define CVECTOR_IMPLEMENTATION
 #include "cvector.h"
 
+
 unsigned long sum_proper_divisors(unsigned long a)
 {
 	unsigned long sum = 1;

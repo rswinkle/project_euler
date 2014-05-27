@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <ctype.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -106,8 +107,7 @@ int is_any(c_array* array, const void* the_one, int (*are_equal)(const void*, co
 void map(c_array* array, void (*func)(const void*));
 
 
-void boyermoore_search(c_array haystack_array, c_array needle_array);
-void basic_search(c_array haystack, c_array needle);
+unsigned int find(c_array haystack, c_array needle);
 
 
 #define INT_MAX_LEN sizeof(int)*CHAR_BIT
