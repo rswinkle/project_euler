@@ -171,6 +171,7 @@ unsigned long* pascals_triangle_nth_row(unsigned long n)
 
 
 //Sieve of Eratosthenes
+//start primes size based on prime number theorem
 
 unsigned long find_primes_upto_n(vector_i* primes_out, unsigned long n)
 {
