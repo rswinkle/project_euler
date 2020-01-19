@@ -1,13 +1,17 @@
 #include <stdio.h>
+#include <stdint.h>
 
 #define CVECTOR_IMPLEMENTATION
 #include "cvector.h"
 
-unsigned long find_primes_upto_n(vector_i* primes_out, unsigned long n)
+
+typedef uint64_t u64;
+
+u64 find_primes_upto_n(cvector_i* primes_out, u64 n)
 {
-	vector_i sieve, primes;
-	vec_i(&sieve, n+1, n+1); //+ 1 for 0 position
-	vec_i(&primes, 0, 50000);
+	cvector_i sieve, primes;
+	cvec_i(&sieve, n+1, n+1); //+ 1 for 0 position
+	cvec_i(&primes, 0, 50000);
 
 	for (int i=0; i < sieve.size; ++i) {
 		sieve.a[i] = i;
@@ -16,7 +20,7 @@ unsigned long find_primes_upto_n(vector_i* primes_out, unsigned long n)
 	int num_primes = 0;
 	int p = 2, mult = 2, tmp;
 
-	push_i(&primes, p); //gotta put 2 in there
+	cvec_push_i(&primes, p); //gotta put 2 in there
 	while (primes.size < n) {
 		//mult = p; already true
 		while (mult < sieve.size) {
@@ -47,13 +51,13 @@ unsigned long find_primes_upto_n(vector_i* primes_out, unsigned long n)
 		}
 
 		p = mult;
-		push_i(&primes, p);
+		cvec_push_i(&primes, p);
 	}
 
 exit:
 
 	*primes_out = primes;
-	free_vec_i(&sieve);
+	cvec_free_i(&sieve);
 	return primes.size;
 }
 
@@ -69,13 +73,13 @@ int main(int argc, char** argv)
 
 	char* end;
 
-	unsigned long n = strtoul(argv[1], &end, 10);
+	u64 n = strtoul(argv[1], &end, 10);
 
-	vector_i primes;
+	cvector_i primes;
 	find_primes_upto_n(&primes, n);
 
-	printf("found %u primes\n", primes.size);
-	unsigned long sum = 0;
+	printf("found %zd primes\n", primes.size);
+	u64 sum = 0;
 	for (int i=0; i < primes.size; ++i) {
 		sum += primes.a[i];
 		//printf("%lu  %lu\n", sum, primes.a[i]);
@@ -83,7 +87,7 @@ int main(int argc, char** argv)
 
 	printf("the sum of all primes up to %lu is %lu\n", n, sum);
 
-	free_vec_i(&primes);
+	cvec_free_i(&primes);
 
 
 	return 0;
