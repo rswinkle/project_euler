@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <math.h>
+#include <stdint.h>
 
 
 #define CVECTOR_IMPLEMENTATION
 #include "cvector.h"
 
+typedef uint64_t u64;
 
-unsigned long sum_proper_divisors(unsigned long a)
+u64 sum_proper_divisors(u64 a)
 {
-	unsigned long sum = 1;
+	u64 sum = 1;
 
 	for (int i=2; i < sqrt(a); ++i) {
 		if (a % i == 0)
@@ -22,8 +24,8 @@ unsigned long sum_proper_divisors(unsigned long a)
 int main(int argc, char** argv)
 {
 	
-	vector_i div_sum;
-	vec_i(&div_sum, 10000, 10000);
+	cvector_i div_sum;
+	cvec_i(&div_sum, 10000, 10000);
 
 	int amicable_sum = 0;
 
@@ -42,6 +44,7 @@ int main(int argc, char** argv)
 
 	printf("The sum of amicable numbers < 10000 is %d\n", amicable_sum);
 
+	cvec_free_i(&div_sum);
 
 
 
