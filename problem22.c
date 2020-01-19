@@ -7,11 +7,6 @@
 #include "cvector.h"
 
 
-int compare_str(const void* a, const void* b)
-{
-	return strcmp(*(char**)a, *(char**)b);
-}
-
 
 int main(int argc, char** argv)
 {
@@ -24,16 +19,16 @@ int main(int argc, char** argv)
 
 	c_array *results = (c_array*)names.data;
 
-	vector_str names2;
-	vec_str(&names2, 0, 3000);
+	cvector_str names2;
+	cvec_str(&names2, 0, 3000);
 	for (int i=0; i < names.len; ++i) {
 		results[i].data[results[i].len-1] = '\0'; //cut off ending '"'
 		results[i].data++; //cut off starting '"'
 		//printf("%d: %s\n", i, results[i].data);
-		push_str(&names2, results[i].data);
+		cvec_push_str(&names2, results[i].data);
 	}
 
-	qsort((void*)names2.a, names2.size, sizeof(char*), compare_str);
+	qsort((void*)names2.a, names2.size, sizeof(char*), compare_string);
 
 	unsigned long sum, total = 0;
 	for (int i=0; i < names2.size; ++i) {
@@ -48,6 +43,7 @@ int main(int argc, char** argv)
 	printf("The total of all name scores is %lu\n", total);
 
 
+	cvec_free_str(&names2);
 
 
 	return 0;
