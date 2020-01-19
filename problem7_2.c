@@ -15,9 +15,9 @@ int main(int argc, char** argv)
 
 	int n = atoi(argv[1]);
 
-	vector_i sieve, primes;
-	vec_i(&sieve, 200000, 200000);
-	vec_i(&primes, 0, 50000);
+	cvector_i sieve, primes;
+	cvec_i(&sieve, 200000, 200000);
+	cvec_i(&primes, 0, 50000);
 	//int* sieve = malloc(n * sizeof(int));
 	//int* primes = malloc(n/2 * sizeof(int));
 
@@ -28,7 +28,7 @@ int main(int argc, char** argv)
 	int num_primes = 0;
 	int p = 2, mult = 2, tmp;
 
-	push_i(&primes, p); //gotta put 2 in there
+	cvec_push_i(&primes, p); //gotta put 2 in there
 	while (primes.size < n) {
 		//primes.a[primes.size] = p;
 
@@ -43,7 +43,7 @@ int main(int argc, char** argv)
 
 			if (mult >= sieve.size) {
 				tmp = sieve.size;
-				extend_i(&sieve, 100000);
+				cvec_extend_i(&sieve, 100000);
 				for (int i=tmp; i < sieve.size; ++i) {
 					sieve.a[i] = i;
 					for (int j=0; j < primes.size; ++j) {
@@ -59,11 +59,14 @@ int main(int argc, char** argv)
 		}
 
 		p = mult;
-		push_i(&primes, p);
+		cvec_push_i(&primes, p);
 	}
 
 exit:
-	printf("Found %d primes <= to %d and the nth is %d\n", primes.size, sieve.size-1, primes.a[n - 1]);
+	printf("Found %zd primes <= to %zd and the nth is %d\n", primes.size, sieve.size-1, primes.a[n - 1]);
+
+	cvec_free_i(&sieve);
+	cvec_free_i(&primes);
 
 
 	return 0;
