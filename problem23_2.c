@@ -40,8 +40,8 @@ int main(int argc, char** argv)
 {
 	char* is_abundant = calloc(28124, 1);
 
-	vector_i abundant;
-	vec_i(&abundant, 0, 1000);
+	cvector_i abundant;
+	cvec_i(&abundant, 0, 1000);
 
 	int tmp;
 	for (int i=12; i<28123; ++i) {
@@ -49,7 +49,7 @@ int main(int argc, char** argv)
 		if (tmp > i) {
 			printf("%d is abundant, tmp = %d\n", i, tmp);
 			is_abundant[i] = 1;
-			push_i(&abundant, i);
+			cvec_push_i(&abundant, i);
 		}
 	}
 	printf("abundant size = %lu\n", abundant.size);
@@ -84,6 +84,7 @@ found_out:
 
 	printf("sum = %d\n", sum);
 
+	cvec_free_i(&abundant);
 
 
 	return 0;

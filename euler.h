@@ -8,8 +8,8 @@
 #include <assert.h>
 #include <math.h>
 
-#define max(a, b) ((a) > (b) ? (a) : (b))
-#define min(a, b) ((a) < (b) ? (a) : (b))
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 unsigned long gcd(unsigned long a, unsigned long b)
 {
@@ -84,7 +84,7 @@ unsigned long permutation(unsigned long n, unsigned long r)
 	return factorial(n) / factorial(n - r);
 }
 
-void prime_factorization(unsigned long a, vector_i* primes, vector_i* factors, vector_i* powers)
+void prime_factorization(unsigned long a, cvector_i* primes, cvector_i* factors, cvector_i* powers)
 {
 	if (a < 2)
 		return;
@@ -92,8 +92,8 @@ void prime_factorization(unsigned long a, vector_i* primes, vector_i* factors, v
 	for (int i=0; i<primes->size && primes->a[i] < sqrt(a); ++i) {
 		if (a % primes->a[i] == 0) {
 			a /= primes->a[i];
-			push_i(factors, primes->a[i]);
-			push_i(powers, 1);
+			cvec_push_i(factors, primes->a[i]);
+			cvec_push_i(powers, 1);
 		}
 		while (a % primes->a[i] == 0) {
 			a /= primes->a[i];
@@ -105,11 +105,11 @@ void prime_factorization(unsigned long a, vector_i* primes, vector_i* factors, v
 //# of divisors d(n) = (a+1)*(b+1)*(c+1)
 //if prime factorization of n is p^a*q^b*r^c
 //TODO
-unsigned long sum_divisors_prime(unsigned long a, vector_i* primes)
+unsigned long sum_divisors_prime(unsigned long a, cvector_i* primes)
 {
-	vector_i factors, powers;
-	vec_i(&factors, 0, 10);
-	vec_i(&powers, 0, 10);
+	cvector_i factors, powers;
+	cvec_i(&factors, 0, 10);
+	cvec_i(&powers, 0, 10);
 
 	if (a == 0)
 		return 0;
@@ -122,8 +122,8 @@ unsigned long sum_divisors_prime(unsigned long a, vector_i* primes)
 	for (int i=0; i<powers.size; ++i)
 		sum *= (powers.a[i]+1);
 
-	free_vec_i(&factors);
-	free_vec_i(&powers);
+	cvec_free_i(&factors);
+	cvec_free_i(&powers);
 
 	return sum;
 }
@@ -173,11 +173,11 @@ unsigned long* pascals_triangle_nth_row(unsigned long n)
 //Sieve of Eratosthenes
 //start primes size based on prime number theorem
 
-unsigned long find_primes_upto_n(vector_i* primes_out, unsigned long n)
+unsigned long find_primes_upto_n(cvector_i* primes_out, unsigned long n)
 {
-	vector_i sieve, primes;
-	vec_i(&sieve, n+1, n+1); //+ 1 for 0 position
-	vec_i(&primes, 0, (double)(n*1.2)/log(n));  //prime number theorem says x/ln(x) ~ num_primes <= x 
+	cvector_i sieve, primes;
+	cvec_i(&sieve, n+1, n+1); //+ 1 for 0 position
+	cvec_i(&primes, 0, (double)(n*1.2)/log(n));  //prime number theorem says x/ln(x) ~ num_primes <= x 
 
 	for (int i=0; i < sieve.size; ++i) {
 		sieve.a[i] = i;
@@ -186,7 +186,7 @@ unsigned long find_primes_upto_n(vector_i* primes_out, unsigned long n)
 	int num_primes = 0;
 	int p = 2, mult = 2, tmp;
 
-	push_i(&primes, p); //gotta put 2 in there
+	cvec_push_i(&primes, p); //gotta put 2 in there
 	while (1) {
 
 		while (mult < sieve.size) {
@@ -203,26 +203,26 @@ unsigned long find_primes_upto_n(vector_i* primes_out, unsigned long n)
 		}
 
 		p = mult;
-		push_i(&primes, p);
+		cvec_push_i(&primes, p);
 	}
 
 exit:
 
 	*primes_out = primes;
-	free_vec_i(&sieve);
+	cvec_free_i(&sieve);
 	return primes.size;
 }
 
 unsigned long find_nth_prime(unsigned long n)
 {
-	vector_i sieve, primes;
+	cvector_i sieve, primes;
 	unsigned long sz = 100;
 
 	while (sz/log(sz) < n) //prime number theorem, can't think of an analytical solution for this
 		sz += 100;
 
-	vec_i(&sieve, sz, sz);
-	vec_i(&primes, 0, 50000);
+	cvec_i(&sieve, sz, sz);
+	cvec_i(&primes, 0, 50000);
 
 	for (int i=0; i < sieve.size; ++i) {
 		sieve.a[i] = i;
@@ -230,7 +230,7 @@ unsigned long find_nth_prime(unsigned long n)
 
 	int p = 2, mult = 2, mult2, tmp;
 
-	push_i(&primes, p); //gotta put 2 in there
+	cvec_push_i(&primes, p); //gotta put 2 in there
 	while (primes.size < n) {
 		while (mult < sieve.size) {
 			sieve.a[mult] = 0; //mark as composite
@@ -267,14 +267,14 @@ unsigned long find_nth_prime(unsigned long n)
 
 		p = mult;
 		assert(p);
-		push_i(&primes, p);
+		cvec_push_i(&primes, p);
 	}
 
 exit:
 	;
 	unsigned long ret = primes.a[primes.size-1];
-	free_vec_i(&sieve);
-	free_vec_i(&primes);
+	cvec_free_i(&sieve);
+	cvec_free_i(&primes);
 
 	return ret;
 }

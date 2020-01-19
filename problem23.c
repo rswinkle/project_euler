@@ -4,21 +4,17 @@
 #include "euler.h"
 
 
-//#define CVECTOR_IMPLEMENTATION
-//#include "cvector.h"
-
-
 
 int main(int argc, char** argv)
 {
-	vector_i abundant_nums, primes;
+	cvector_i abundant_nums, primes;
 
-	vec_i(&abundant_nums, 0, 30000);
-	vec_i(&primes, 0, sqrt(28123));
+	cvec_i(&abundant_nums, 0, 30000);
+	cvec_i(&primes, 0, sqrt(28123));
 
 	find_primes_upto_n(&primes, (int)sqrt(28123));
 
-	printf("There are %lu primes less than %d sqrt(28123)\n", primes.size, (int)sqrt(28123));
+	printf("There are %zd primes less than %d sqrt(28123)\n", primes.size, (int)sqrt(28123));
 	for (int i=0; i<primes.size; ++i)
 		printf("%d\n", primes.a[i]);
 
@@ -28,7 +24,7 @@ int main(int argc, char** argv)
 	for (int i=2; i<28123; ++i) {
 		tmp = sum_divisors_prime(i, &primes) - i; //proper divisors doesn't count the number itself
 		if (tmp > i)
-			push_i(&abundant_nums, i);
+			cvec_push_i(&abundant_nums, i);
 	}
 		
 
@@ -67,8 +63,8 @@ int main(int argc, char** argv)
 			sum_of_failures += i;
 	}
 	*/
-	vector_i abundant_sums;
-	vec_i(&abundant_sums, 0, 50000);
+	cvector_i abundant_sums;
+	cvec_i(&abundant_sums, 0, 50000);
 
 	printf("combination(28123,2) = %lu\n", combination(28123,2));
 
@@ -80,6 +76,9 @@ int main(int argc, char** argv)
 
 	printf("Sum of positive ints that can't be written as sum of 2 abundant #'s: %lu\n", sum_of_failures);
 
+	cvec_free_i(&abundant_nums);
+	cvec_free_i(&primes);
+	cvec_free_i(&abundant_sums);
 
 	return 0;
 }
