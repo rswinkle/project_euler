@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "c_utils.h"
+#include <string.h>
 
 /*
  * "Since the required answer to this problem only requires the first 10 digits of the sum,
