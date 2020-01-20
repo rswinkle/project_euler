@@ -7,13 +7,24 @@
 
 #include <assert.h>
 #include <math.h>
+#include <stdint.h>
 
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
-unsigned long gcd(unsigned long a, unsigned long b)
+typedef uint8_t u8;
+typedef uint16_t u16;
+typedef uint32_t u32;
+typedef uint64_t u64;
+
+typedef int8_t i8;
+typedef int16_t i16;
+typedef int32_t i32;
+typedef int64_t i64;
+
+u64 gcd(u64 a, u64 b)
 {
-	unsigned long tmp;
+	u64 tmp;
 	while (b) {
 		tmp = b;
 		b = a % b;
@@ -24,7 +35,7 @@ unsigned long gcd(unsigned long a, unsigned long b)
 
 //TODO finish
 /*
-unsigned long gcd_binary(unsigned long a, unsigned long b)
+u64 gcd_binary(u64 a, u64 b)
 {
 	unsigned d = 1;
 
@@ -50,14 +61,14 @@ unsigned long gcd_binary(unsigned long a, unsigned long b)
 
 
 
-unsigned long lcm(unsigned long a, unsigned long b)
+u64 lcm(u64 a, u64 b)
 {
 	return (a * b) / gcd(a, b);
 }
 
-unsigned long factorial(unsigned long n)
+u64 factorial(u64 n)
 {
-	unsigned long fact = 1, i = 2;
+	u64 fact = 1, i = 2;
 	while (i <= n) {
 		fact *= i;
 		++i;
@@ -67,7 +78,7 @@ unsigned long factorial(unsigned long n)
 		
 
 //n choose r, order doesn't matter
-unsigned long combination(unsigned long n, unsigned long r)
+u64 combination(u64 n, u64 r)
 {
 	if (r > n)
 		return 0;
@@ -76,7 +87,7 @@ unsigned long combination(unsigned long n, unsigned long r)
 }
 
 //n choose r, order matters
-unsigned long permutation(unsigned long n, unsigned long r)
+u64 permutation(u64 n, u64 r)
 {
 	if (r > n)
 		return 0;
@@ -84,7 +95,7 @@ unsigned long permutation(unsigned long n, unsigned long r)
 	return factorial(n) / factorial(n - r);
 }
 
-void prime_factorization(unsigned long a, cvector_i* primes, cvector_i* factors, cvector_i* powers)
+void prime_factorization(u64 a, cvector_i* primes, cvector_i* factors, cvector_i* powers)
 {
 	if (a < 2)
 		return;
@@ -105,7 +116,7 @@ void prime_factorization(unsigned long a, cvector_i* primes, cvector_i* factors,
 //# of divisors d(n) = (a+1)*(b+1)*(c+1)
 //if prime factorization of n is p^a*q^b*r^c
 //TODO
-unsigned long sum_divisors_prime(unsigned long a, cvector_i* primes)
+u64 sum_divisors_prime(u64 a, cvector_i* primes)
 {
 	cvector_i factors, powers;
 	cvec_i(&factors, 0, 10);
@@ -118,7 +129,7 @@ unsigned long sum_divisors_prime(unsigned long a, cvector_i* primes)
 
 	prime_factorization(a, primes, &factors, &powers);
 
-	unsigned long sum = 1;
+	u64 sum = 1;
 	for (int i=0; i<powers.size; ++i)
 		sum *= (powers.a[i]+1);
 
@@ -128,9 +139,9 @@ unsigned long sum_divisors_prime(unsigned long a, cvector_i* primes)
 	return sum;
 }
 
-unsigned long sum_proper_divisors(unsigned long a)
+u64 sum_proper_divisors(u64 a)
 {
-	unsigned long sum = 1;
+	u64 sum = 1;
 
 	for (int i=2; i < sqrt(a); ++i) {
 		if (a % i == 0)
@@ -152,14 +163,14 @@ void quadratic_formula(double a, double b, double c, double* x1, double *x2)
 //1       1   1
 //2     1   2   1
 //etc
-unsigned long* pascals_triangle_nth_row(unsigned long n)
+u64* pascals_triangle_nth_row(u64 n)
 {
-	unsigned long* row = malloc((n+1) * sizeof(unsigned long));
+	u64* row = malloc((n+1) * sizeof(u64));
 	assert(row);
 
 	row[0] = 1;
 	row[n] = 1;
-	for (unsigned long i = 1; i < n; ++i)
+	for (u64 i = 1; i < n; ++i)
 		row[i] = combination(n, i);
 
 	return row;
@@ -173,7 +184,7 @@ unsigned long* pascals_triangle_nth_row(unsigned long n)
 //Sieve of Eratosthenes
 //start primes size based on prime number theorem
 
-unsigned long find_primes_upto_n(cvector_i* primes_out, unsigned long n)
+u64 find_primes_upto_n(cvector_i* primes_out, u64 n)
 {
 	cvector_i sieve, primes;
 	cvec_i(&sieve, n+1, n+1); //+ 1 for 0 position
@@ -213,10 +224,10 @@ exit:
 	return primes.size;
 }
 
-unsigned long find_nth_prime(unsigned long n)
+u64 find_nth_prime(u64 n)
 {
 	cvector_i sieve, primes;
-	unsigned long sz = 100;
+	u64 sz = 100;
 
 	while (sz/log(sz) < n) //prime number theorem, can't think of an analytical solution for this
 		sz += 100;
@@ -272,7 +283,7 @@ unsigned long find_nth_prime(unsigned long n)
 
 exit:
 	;
-	unsigned long ret = primes.a[primes.size-1];
+	u64 ret = primes.a[primes.size-1];
 	cvec_free_i(&sieve);
 	cvec_free_i(&primes);
 
