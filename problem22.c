@@ -28,7 +28,7 @@ int main(int argc, char** argv)
 		cvec_push_str(&names2, results[i].data);
 	}
 
-	qsort((void*)names2.a, names2.size, sizeof(char*), compare_string);
+	qsort((void*)names2.a, names2.size, sizeof(char*), cmp_string_lt);
 
 	unsigned long sum, total = 0;
 	for (int i=0; i < names2.size; ++i) {

@@ -39,18 +39,6 @@ KeyboardInterrupt
 
 */
 
-int compare_char_reverse(const void* a, const void* b)
-{
-	char a_ = *(char*)a;
-	char b_ = *(char*)b;
-
-	if (a_ > b_)
-		return -1;
-	else if (a_ < b_)
-		return 1;
-
-	return 0;
-}
 
 
 int main(int argc, char** argv)
@@ -77,7 +65,7 @@ int main(int argc, char** argv)
 	unsigned long next;
 	unsigned long tmp;
 
-	qsort(str, symbols_left, 1, compare_char);
+	qsort(str, symbols_left, 1, cmp_char_lt);
 
 	if (perms_left > total_perms) {
 		printf("There are only %lu permutations in the string you provided!\n", total_perms);
@@ -89,6 +77,7 @@ int main(int argc, char** argv)
 	}
 
 
+	/*
 	while () {
 		--symbols_left;
 		 next = factorial(symbols_left-1);
@@ -102,9 +91,7 @@ int main(int argc, char** argv)
 		final[used] = str[tmp+used];
 		++used;
 	}
-		
-		
-		
+	*/
 
 
 	return 0;

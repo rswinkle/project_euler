@@ -1,4 +1,5 @@
 
+#include "euler.h"
 #include "c_utils.h"
 
 #include <stdio.h>
@@ -6,9 +7,6 @@
 #include <string.h>
 #include <assert.h>
 #include <math.h>
-
-#define max(a, b) ((a) > (b) ? (a) : (b))
-#define min(a, b) ((a) < (b) ? (a) : (b))
 
 
 int main(int argc, char** argv)
@@ -41,7 +39,7 @@ int main(int argc, char** argv)
 
 	for (i = 98; i >= 0; --i) {
 		for (int j=0; j <= i; ++j) {
-			triangle[i][j] += max(triangle[i+1][j], triangle[i+1][j+1]);
+			triangle[i][j] += MAX(triangle[i+1][j], triangle[i+1][j+1]);
 		}
 	}
 
